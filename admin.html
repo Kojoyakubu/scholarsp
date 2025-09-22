@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholar's Admin</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button id="mode-toggle">🌙</button>
+    <div class="container">
+        <h1>Scholar's Path Admin Panel 🤖</h1>
+        <form id="quiz-form">
+            <label for="level">Level:</label>
+            <select id="level-input" name="level" required>
+                <option value="">-- Select Level --</option>
+                <option value="primary">Primary (Basic 1–6)</option>
+                <option value="jhs">Junior High School (Basic 7–9)</option>
+                <option value="shs">Senior High School (Basic 10–12)</option>
+            </select>
+
+            <label for="class">Class:</label>
+            <select id="class-input" name="class" required disabled>
+                <option value="">-- Select Class --</option>
+            </select>
+
+            <label for="subject">Subject:</label>
+            <select id="subject-input" name="subject" required disabled>
+                <option value="">-- Select Subject --</option>
+            </select>
+
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic-input" name="topic" required>
+
+            <label for="count">Number of Questions (1-50):</label>
+            <input type="number" id="count-input" name="count" min="1" max="50" value="5" required>
+
+            <div class="timer-toggle">
+                <label for="timer-toggle-input">Enable Timer</label>
+                <input type="checkbox" id="timer-toggle-input" name="timer-toggle-input" checked>
+            </div>
+            
+            <div id="timer-settings" class="timer-settings">
+                <label for="time-per-question-input">Time per question (minutes):</label>
+                <input type="number" id="time-per-question-input" name="time-per-question" min="1" value="1">
+            </div>
+
+            <button id="generate-btn" type="submit" disabled>Generate Questions</button>
+        </form>
+
+        <div class="status" id="status-message"></div>
+        <pre id="questions-output"></pre>
+        <button id="save-btn" style="display: none;">Save Questions to File</button>
+        <div class="status" id="save-status"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 James Anim Gyeke. All rights reserved.</p>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>

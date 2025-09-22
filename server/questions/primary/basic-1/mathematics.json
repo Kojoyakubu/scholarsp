@@ -1,0 +1,67 @@
+[
+  {
+    "topic": "Addition",
+    "subject": "Mathematics",
+    "question": "What is the sum of 345 and 678?",
+    "options": [
+      "913",
+      "1013",
+      "1023",
+      "923"
+    ],
+    "correct_answer": "1023",
+    "correct_answer_explanation": "Adding 345 and 678 results in 1023."
+  },
+  {
+    "topic": "Addition",
+    "subject": "Mathematics",
+    "question": "Calculate 125 + 875.",
+    "options": [
+      "900",
+      "1000",
+      "800",
+      "1100"
+    ],
+    "correct_answer": "1000",
+    "correct_answer_explanation": "The sum of 125 and 875 is 1000."
+  },
+  {
+    "topic": "Addition",
+    "subject": "Mathematics",
+    "question": "Add 2345, 123, and 5678.",
+    "options": [
+      "8146",
+      "7946",
+      "8046",
+      "7846"
+    ],
+    "correct_answer": "8046",
+    "correct_answer_explanation": "Adding 2345, 123, and 5678 gives a total of 8046."
+  },
+  {
+    "topic": "Addition",
+    "subject": "Mathematics",
+    "question": "What is the result of 987 + 654 + 321?",
+    "options": [
+      "1962",
+      "1862",
+      "1952",
+      "1852"
+    ],
+    "correct_answer": "1962",
+    "correct_answer_explanation": "Summing 987, 654, and 321 equals 1962."
+  },
+  {
+    "topic": "Addition",
+    "subject": "Mathematics",
+    "question": "If you add 4567 to 3210, what is the total?",
+    "options": [
+      "7777",
+      "7767",
+      "7877",
+      "7677"
+    ],
+    "correct_answer": "7777",
+    "correct_answer_explanation": "4567 plus 3210 is equal to 7777."
+  }
+]

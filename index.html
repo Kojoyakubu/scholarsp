@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHOLAR'S PATH</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button id="mode-toggle">🌙</button>
+    <div class="header-container">
+        <div class="timer-container">
+            Time remaining: <span id="timer"></span>
+        </div>
+        <div id="score-display" class="score-container">
+            Score: <span id="score-value">0/0</span>
+        </div>
+        <div class="placeholder"></div>
+    </div>
+
+    <div id="welcome-container" class="container fade-in">
+        <img src="./images/shor.png" alt="Quiz Site Logo" class="quiz-logo">
+        <h2>Welcome to the</h2>
+        <h1>SCHOLAR'S PATH</h1>
+
+        <p>Test your knowledge on various subjects.</p>
+        
+        <div class="level-selection">
+            <label for="level-select">Select a Level:</label>
+            <select id="level-select">
+                <option value="">-- Select Level --</option>
+                <option value="primary">Primary (Basic 1–6)</option>
+                <option value="jhs">Junior High School (Basic 7–9)</option>
+                <option value="shs">Senior High School (Basic 10–12)</option>
+            </select>
+        </div>
+
+        <div class="class-selection">
+            <label for="class-select">Select a Class:</label>
+            <select id="class-select" disabled>
+                <option value="">-- Select Class --</option>
+            </select>
+        </div>
+
+        <div class="subject-selection">
+            <label for="subject-select">Select a Subject:</label>
+            <select id="subject-select" disabled>
+                <option value="">-- Select Subject --</option>
+            </select>
+        </div>
+
+        <button id="start-btn" disabled>Start Quiz</button>
+    </div>
+
+    <div id="quiz-container" class="container hidden">
+        <h1 id="quiz-title"></h1>
+        <div id="question-text"></div>
+        <ul id="options-list"></ul>
+        
+        <div class="quiz-navigation">
+            <button id="prev-btn" class="nav-btn hidden">Previous</button>
+            <button id="next-btn" class="nav-btn">Next</button>
+            <button id="submit-btn" class="hidden">Submit Quiz</button>
+        </div>
+    </div>
+
+    <div id="results-container" class="container hidden">
+        <h2>Quiz Results</h2>
+        <div id="score-output"></div>
+        <div id="answers-review"></div>
+        <button id="restart-btn">Take Another Quiz</button>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 James Anim Gyeke. All Rights Reserved.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

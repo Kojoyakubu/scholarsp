@@ -1,0 +1,192 @@
+[
+  {
+    "question": "What do living things need to grow and stay healthy?",
+    "options": [
+      {
+        "A": "New clothes and toys"
+      },
+      {
+        "B": "Food and water"
+      },
+      {
+        "C": "A quiet room"
+      },
+      {
+        "D": "Many friends"
+      }
+    ],
+    "correct_answer": "B",
+    "correct_answer_explanation": "Just like you, all living things, including plants and animals, need food to get energy and water to stay hydrated so they can grow big and strong."
+  },
+  {
+    "question": "Which of these is a living thing?",
+    "options": [
+      {
+        "A": "A stone"
+      },
+      {
+        "B": "A car"
+      },
+      {
+        "C": "A cat"
+      },
+      {
+        "D": "A table"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "A cat is a living thing because it can move, eat, grow, breathe, and reproduce. Stones, cars, and tables are non-living because they cannot do these things on their own."
+  },
+  {
+    "question": "What is something a non-living thing *cannot* do by itself?",
+    "options": [
+      {
+        "A": "Stay still"
+      },
+      {
+        "B": "Make noise"
+      },
+      {
+        "C": "Grow bigger"
+      },
+      {
+        "D": "Be heavy"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Non-living things, like a toy or a book, do not grow naturally on their own. Only living things, like you or a plant, can grow bigger."
+  },
+  {
+    "question": "Which of these characteristics is true for all living things?",
+    "options": [
+      {
+        "A": "They can fly"
+      },
+      {
+        "B": "They need food"
+      },
+      {
+        "C": "They are always green"
+      },
+      {
+        "D": "They live in water"
+      }
+    ],
+    "correct_answer": "B",
+    "correct_answer_explanation": "All living things, whether they are plants, animals, or humans, need food to get energy to live and grow. Not all can fly, are green, or live in water."
+  },
+  {
+    "question": "A plant is a living thing because it can...",
+    "options": [
+      {
+        "A": "Talk to people"
+      },
+      {
+        "B": "Move from place to place quickly"
+      },
+      {
+        "C": "Make its own food and grow"
+      },
+      {
+        "D": "Drive a car"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Plants are living things. They use sunlight, water, and air to make their own food (a process called photosynthesis) and they also grow bigger over time."
+  },
+  {
+    "question": "Which of these is a non-living thing you might find in your classroom?",
+    "options": [
+      {
+        "A": "Your teacher"
+      },
+      {
+        "B": "A spider"
+      },
+      {
+        "C": "A pencil"
+      },
+      {
+        "D": "A potted plant"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "A pencil cannot eat, breathe, grow, or move on its own, so it is a non-living thing. Your teacher, a spider, and a potted plant are all living things."
+  },
+  {
+    "question": "If something can breathe, move, and grow, it is most likely a...",
+    "options": [
+      {
+        "A": "Non-living thing"
+      },
+      {
+        "B": "Dead thing"
+      },
+      {
+        "C": "Living thing"
+      },
+      {
+        "D": "Still thing"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Breathing, movement (even if slow), and growth are key characteristics of living things. Non-living things do not possess these traits."
+  },
+  {
+    "question": "What makes a rock different from a bird?",
+    "options": [
+      {
+        "A": "A rock is usually bigger"
+      },
+      {
+        "B": "A bird can fly"
+      },
+      {
+        "C": "A rock does not need food or water"
+      },
+      {
+        "D": "A bird makes noise"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "The most important difference is that a rock is non-living and therefore does not need food or water to survive, unlike a bird which is a living thing."
+  },
+  {
+    "question": "Imagine you have a toy car and a real puppy. Which one needs water to drink?",
+    "options": [
+      {
+        "A": "The toy car"
+      },
+      {
+        "B": "The real puppy"
+      },
+      {
+        "C": "Both of them"
+      },
+      {
+        "D": "Neither of them"
+      }
+    ],
+    "correct_answer": "B",
+    "correct_answer_explanation": "A real puppy is a living animal and needs water to stay hydrated and alive. A toy car is a non-living thing and does not need water to function."
+  },
+  {
+    "question": "Which group contains *only* living things?",
+    "options": [
+      {
+        "A": "Sun, cloud, tree"
+      },
+      {
+        "B": "Bird, fish, human"
+      },
+      {
+        "C": "Ball, book, flower"
+      },
+      {
+        "D": "Water, stone, dog"
+      }
+    ],
+    "correct_answer": "B",
+    "correct_answer_explanation": "Birds, fish, and humans are all animals that breathe, eat, grow, and move, making them living things. The other options include non-living things like the sun, clouds, balls, books, water, and stones."
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "topic": "Phonetics",
+    "subject": "English Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which word has the same vowel sound as 'cat'?",
+    "options": [
+      "hat",
+      "kite",
+      "big",
+      "sun"
+    ],
+    "correct_answer": "hat",
+    "correct_answer_explanation": "Both 'cat' and 'hat' have the short 'a' vowel sound."
+  },
+  {
+    "topic": "Phonetics",
+    "subject": "English Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "What is the beginning sound in the word 'dog'?",
+    "options": [
+      "/d/",
+      "/g/",
+      "/o/",
+      "/k/"
+    ],
+    "correct_answer": "/d/",
+    "correct_answer_explanation": "/d/ is the initial consonant sound in 'dog'."
+  },
+  {
+    "topic": "Phonetics",
+    "subject": "English Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which word rhymes with 'sun'?",
+    "options": [
+      "run",
+      "red",
+      "dog",
+      "cat"
+    ],
+    "correct_answer": "run",
+    "correct_answer_explanation": "'Sun' and 'run' have the same ending vowel and consonant sounds."
+  },
+  {
+    "topic": "Phonetics",
+    "subject": "English Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which word has a different vowel sound than the others?",
+    "options": [
+      "pen",
+      "ten",
+      "hen",
+      "sun"
+    ],
+    "correct_answer": "sun",
+    "correct_answer_explanation": "'Sun' has a different vowel sound than 'pen', 'ten', and 'hen'."
+  },
+  {
+    "topic": "Phonetics",
+    "subject": "English Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "What is the ending sound in the word 'ship'?",
+    "options": [
+      "/sh/",
+      "/p/",
+      "/i/",
+      "/s/"
+    ],
+    "correct_answer": "/p/",
+    "correct_answer_explanation": "/p/ is the final consonant sound in 'ship'."
+  }
+]

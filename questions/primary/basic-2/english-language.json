@@ -1,0 +1,77 @@
+[
+  {
+    "topic": "Noun",
+    "subject": "English-Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which word is a noun?",
+    "options": [
+      "Run",
+      "Quickly",
+      "Dog",
+      "Happy"
+    ],
+    "correct_answer": "Dog",
+    "correct_answer_explanation": "Dog is a person, place, thing, or idea."
+  },
+  {
+    "topic": "Noun",
+    "subject": "English-Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "What is the noun in this sentence: The cat sat on the mat.",
+    "options": [
+      "sat",
+      "on",
+      "the",
+      "cat"
+    ],
+    "correct_answer": "cat",
+    "correct_answer_explanation": "Cat is a person, place, thing, or idea."
+  },
+  {
+    "topic": "Noun",
+    "subject": "English-Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which of these is a type of noun that names a specific person?",
+    "options": [
+      "City",
+      "Table",
+      "River",
+      "Michael"
+    ],
+    "correct_answer": "Michael",
+    "correct_answer_explanation": "Michael is a proper noun, a name of a specific person."
+  },
+  {
+    "topic": "Noun",
+    "subject": "English-Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Which word names a place?",
+    "options": [
+      "Sing",
+      "School",
+      "Jump",
+      "Quickly"
+    ],
+    "correct_answer": "School",
+    "correct_answer_explanation": "School is a place."
+  },
+  {
+    "topic": "Noun",
+    "subject": "English-Language",
+    "level": "Primary",
+    "class": "Undefined",
+    "question": "Identify the noun in the sentence: The big red ball bounced high.",
+    "options": [
+      "big",
+      "red",
+      "bounced",
+      "ball"
+    ],
+    "correct_answer": "ball",
+    "correct_answer_explanation": "Ball is a thing."
+  }
+]
