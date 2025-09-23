@@ -48,12 +48,7 @@ const subjectOptions = {
     // Junior High School (Basic 7-9)
     'basic-7-(jhs-1)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
     'basic-8-(jhs-2)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-
-    // Senior High School (Basic 10-12)
-    'basic-10-(shs-1)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
-    'basic-11-(shs-2)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
-    'basic-12-(shs-3)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"]
+    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"]
 };
 
 // Populate class dropdown based on level selection
@@ -68,8 +63,7 @@ levelSelect.addEventListener('change', () => {
     if (classOptions[selectedLevel]) {
         classOptions[selectedLevel].forEach(cls => {
             const option = document.createElement('option');
-            // Correctly format the value for the option
-            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/[\(\)]/g, '').replace(/–/g, '-').trim();
+            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/–/g, '-');
             option.textContent = cls;
             classSelect.appendChild(option);
         });
@@ -87,7 +81,7 @@ classSelect.addEventListener('change', async () => {
     if (subjectOptions[selectedClass]) {
         subjectOptions[selectedClass].forEach(subject => {
             const option = document.createElement('option');
-            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-').trim();
+            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-');
             option.value = formattedValue;
             option.textContent = subject;
             subjectSelect.appendChild(option);
@@ -107,7 +101,7 @@ subjectSelect.addEventListener('change', checkSelections);
 // Function to fetch timer configuration from the server
 async function fetchConfig() {
     try {
-        const response = await fetch('https://scholarspath.onrender.com/config');
+        const response = await fetch('https://scholarspath.onrender.com');
         if (response.ok) {
             const config = await response.json();
             enableTimer = config.enableTimer;
