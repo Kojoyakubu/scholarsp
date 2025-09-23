@@ -1,0 +1,212 @@
+[
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "What is the defining characteristic of a binary compound?",
+    "options": [
+      {
+        "A": "It contains three or more different elements."
+      },
+      {
+        "B": "It is made up of two identical elements bonded together."
+      },
+      {
+        "C": "It is formed from exactly two different elements chemically combined."
+      },
+      {
+        "D": "It is always found in a liquid state at room temperature."
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "A binary compound is a chemical compound formed when two distinct elements combine chemically. The prefix 'bi-' means two."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "Which of the following chemical formulas represents a binary compound?",
+    "options": [
+      {
+        "A": "H₂SO₄ (Sulfuric acid)"
+      },
+      {
+        "B": "CaCO₃ (Calcium carbonate)"
+      },
+      {
+        "C": "NaCl (Sodium chloride)"
+      },
+      {
+        "D": "C₆H₁₂O₆ (Glucose)"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Sodium chloride (NaCl) is composed of only two different elements: sodium (Na) and chlorine (Cl). The other options contain three or more different elements."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "How many oxygen atoms are indicated in one molecule of the binary compound carbon dioxide (CO₂)?",
+    "options": [
+      {
+        "A": "One"
+      },
+      {
+        "B": "Two"
+      },
+      {
+        "C": "C. Three"
+      },
+      {
+        "D": "Four"
+      }
+    ],
+    "correct_answer": "B",
+    "correct_answer_explanation": "The subscript '2' after the 'O' in CO₂ indicates that there are two oxygen atoms for every one carbon atom in a molecule of carbon dioxide."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "What is the correct chemical name for the binary compound with the formula LiF?",
+    "options": [
+      {
+        "A": "Lithium Fluorine"
+      },
+      {
+        "B": "Dilithium Fluoride"
+      },
+      {
+        "C": "Lithium Fluoride"
+      },
+      {
+        "D": "Lithium Fluorate"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "For ionic binary compounds, the metal name comes first, followed by the non-metal name with the '-ide' suffix. Lithium (Li) and Fluorine (F) therefore form Lithium Fluoride."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "The binary compound 'carbon monoxide' has the chemical formula CO. What does the prefix 'mono-' in 'monoxide' signify?",
+    "options": [
+      {
+        "A": "Two oxygen atoms"
+      },
+      {
+        "B": "One carbon atom"
+      },
+      {
+        "C": "One oxygen atom"
+      },
+      {
+        "D": "Three carbon atoms"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "In naming covalent binary compounds, prefixes are used to indicate the number of atoms of each element. 'Mono-' specifically means one, so 'monoxide' indicates one oxygen atom."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "Which of these common substances is a binary compound?",
+    "options": [
+      {
+        "A": "Sugar (C₁₂H₂₂O₁₁)"
+      },
+      {
+        "B": "Baking soda (NaHCO₃)"
+      },
+      {
+        "C": "Water (H₂O)"
+      },
+      {
+        "D": "Vinegar (CH₃COOH)"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Water (H₂O) is composed of only two different elements: hydrogen (H) and oxygen (O). The other options contain three or more different elements."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "Binary ionic compounds, such as sodium chloride (table salt), are generally characterized by which property?",
+    "options": [
+      {
+        "A": "Being excellent conductors of electricity in their solid state."
+      },
+      {
+        "B": "Having low melting and boiling points."
+      },
+      {
+        "C": "Dissolving in water to form ions."
+      },
+      {
+        "D": "Existing as individual molecules."
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Many ionic compounds readily dissolve in water (are soluble) and dissociate into their constituent ions, making the solution able to conduct electricity. They typically have high melting points and do not exist as discrete molecules in the solid state."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "Which of the following is NOT an example of a binary compound?",
+    "options": [
+      {
+        "A": "Ammonia (NH₃)"
+      },
+      {
+        "B": "Methane (CH₄)"
+      },
+      {
+        "C": "Hydrogen peroxide (H₂O₂)"
+      },
+      {
+        "D": "Calcium hydroxide (Ca(OH)₂)"
+      }
+    ],
+    "correct_answer": "D",
+    "correct_answer_explanation": "Calcium hydroxide (Ca(OH)₂) contains three different elements: Calcium (Ca), Oxygen (O), and Hydrogen (H). Ammonia (N, H), Methane (C, H), and Hydrogen peroxide (H, O) are all binary compounds."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "When naming binary covalent compounds, such as N₂O₄, what is the correct prefix for 'four' atoms?",
+    "options": [
+      {
+        "A": "Di-"
+      },
+      {
+        "B": "Tri-"
+      },
+      {
+        "C": "Tetra-"
+      },
+      {
+        "D": "Penta-"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "The prefix 'tetra-' is used in chemical nomenclature to indicate four atoms of an element, as seen in dinitrogen tetroxide (N₂O₄)."
+  },
+  {
+    "topic": "Binary Compounds",
+    "subject": "Science",
+    "question": "Which type of chemical bond is most likely found in a binary compound formed between a metal and a non-metal, like Sodium Chloride (NaCl)?",
+    "options": [
+      {
+        "A": "Covalent bond"
+      },
+      {
+        "B": "Metallic bond"
+      },
+      {
+        "C": "Ionic bond"
+      },
+      {
+        "D": "Hydrogen bond"
+      }
+    ],
+    "correct_answer": "C",
+    "correct_answer_explanation": "Ionic bonds typically form between a metal (which loses electrons) and a non-metal (which gains electrons), resulting in the transfer of electrons and the formation of oppositely charged ions that attract each other. Sodium is a metal, and Chlorine is a non-metal."
+  }
+]
