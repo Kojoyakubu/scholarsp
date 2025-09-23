@@ -12,11 +12,10 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Add this line to serve static files from the 'server' directory
-app.use(express.static('server'));
-
+// THIS IS THE CORRECTED LINE
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '..')));
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const questionsDir = path.join(__dirname, 'questions');
