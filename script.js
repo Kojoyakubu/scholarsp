@@ -26,6 +26,8 @@ let timerInterval;
 let timePerQuestion = 60;
 let enableTimer = true;
 
+const serverUrl = 'https://scholarspath.onrender.com'; // Use your Render URL
+
 // Class options mapping
 const classOptions = {
     primary: ["Basic 1", "Basic 2", "Basic 3", "Basic 4", "Basic 5", "Basic 6"],
@@ -48,7 +50,12 @@ const subjectOptions = {
     // Junior High School (Basic 7-9)
     'basic-7-(jhs-1)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
     'basic-8-(jhs-2)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"]
+    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
+
+    // Senior High School (Basic 10-12)
+    'basic-10-(shs-1)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
+    'basic-11-(shs-2)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
+    'basic-12-(shs-3)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"]
 };
 
 // Populate class dropdown based on level selection
@@ -63,7 +70,7 @@ levelSelect.addEventListener('change', () => {
     if (classOptions[selectedLevel]) {
         classOptions[selectedLevel].forEach(cls => {
             const option = document.createElement('option');
-            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/–/g, '-');
+            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/[\(\)]/g, '');
             option.textContent = cls;
             classSelect.appendChild(option);
         });
@@ -81,7 +88,7 @@ classSelect.addEventListener('change', async () => {
     if (subjectOptions[selectedClass]) {
         subjectOptions[selectedClass].forEach(subject => {
             const option = document.createElement('option');
-            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-');
+            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
             option.value = formattedValue;
             option.textContent = subject;
             subjectSelect.appendChild(option);
@@ -101,7 +108,7 @@ subjectSelect.addEventListener('change', checkSelections);
 // Function to fetch timer configuration from the server
 async function fetchConfig() {
     try {
-        const response = await fetch('https://scholarspath.onrender.com');
+        const response = await fetch(`${serverUrl}/config`);
         if (response.ok) {
             const config = await response.json();
             enableTimer = config.enableTimer;
@@ -143,12 +150,12 @@ startBtn.addEventListener('click', async () => {
         alert("Please select a subject to start the quiz.");
         return;
     }
-    
+
     // Fetch the latest config before starting the quiz
     await fetchConfig();
 
     try {
-        const response = await fetch(`https://scholarspath.onrender.com/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
+        const response = await fetch(`${serverUrl}/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
         if (!response.ok) {
             throw new Error('Failed to load quiz questions.');
         }
@@ -251,7 +258,7 @@ submitBtn.addEventListener('click', () => {
 });
 
 function startTimer() {
-    let timeRemaining = timePerQuestion; // Use the value from the config file
+    let timeRemaining = timePerQuestion * 60; // Convert to seconds
     timerDisplay.textContent = formatTime(timeRemaining);
 
     clearInterval(timerInterval); // Clear any existing timer
@@ -295,7 +302,7 @@ function displayResults() {
 
     const scorePercentage = (score / questions.length) * 100;
     let feedbackComment = '';
-    
+
     if (scorePercentage === 100) {
         feedbackComment = 'Flawless victory! You are a true master of this subject!';
     } else if (scorePercentage >= 80) {
@@ -305,7 +312,7 @@ function displayResults() {
     } else {
         feedbackComment = 'Keep going! Every attempt is a step forward. Review your answers and try again!';
     }
-    
+
     const commentElement = document.createElement('p');
     commentElement.textContent = feedbackComment;
     commentElement.classList.add('feedback-comment');
