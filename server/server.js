@@ -19,7 +19,6 @@ app.use(express.static(path.join(__dirname, '..')));
 
 // Define paths
 const questionsDir = path.join(__dirname, 'questions');
-// CORRECTED: Changed the config path to be inside the questions directory
 const configPath = path.join(questionsDir, 'config.json');
 
 // Ensure the questions directory exists before starting the server
