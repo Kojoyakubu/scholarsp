@@ -19,10 +19,10 @@ app.use(express.static(path.join(__dirname, '..')));
 
 // Define paths
 const questionsDir = path.join(__dirname, 'questions');
-const configPath = path.join(__dirname, '..', 'config.json');
+// CORRECTED: Changed the config path to be inside the questions directory
+const configPath = path.join(questionsDir, 'config.json');
 
 // Ensure the questions directory exists before starting the server
-// THIS IS THE NEW CODE
 async function ensureDirsExist() {
     try {
         await fs.mkdir(questionsDir, { recursive: true });
