@@ -103,7 +103,7 @@ form.addEventListener('submit', async (e) => {
         const topic = topicInput.value;
         const count = countInput.value;
 
-        const response = await fetch('http://localhost:3000/generate-questions', {
+        const response = await fetch('https://scholarspath.onrender.com/generate-questions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ level, class: classLevel, subject, topic, count })
@@ -159,7 +159,7 @@ saveBtn.addEventListener('click', async () => {
         const timePerQuestionInMinutes = parseInt(timePerQuestionInput.value);
         const timePerQuestion = enableTimer ? (timePerQuestionInMinutes * 60) : 0;
 
-        const response = await fetch('http://localhost:3000/save-questions', {
+        const response = await fetch('https://scholarspath.onrender.com/save-questions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

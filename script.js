@@ -101,7 +101,7 @@ subjectSelect.addEventListener('change', checkSelections);
 // Function to fetch timer configuration from the server
 async function fetchConfig() {
     try {
-        const response = await fetch('http://localhost:3000/config');
+        const response = await fetch('https://scholarspath.onrender.com');
         if (response.ok) {
             const config = await response.json();
             enableTimer = config.enableTimer;
@@ -148,7 +148,7 @@ startBtn.addEventListener('click', async () => {
     await fetchConfig();
 
     try {
-        const response = await fetch(`http://localhost:3000/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
+        const response = await fetch(`https://scholarspath.onrender.com/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
         if (!response.ok) {
             throw new Error('Failed to load quiz questions.');
         }
