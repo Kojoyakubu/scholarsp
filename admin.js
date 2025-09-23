@@ -12,7 +12,6 @@ const statusMessage = document.getElementById('status-message');
 const questionsOutput = document.getElementById('questions-output');
 const saveBtn = document.getElementById('save-btn');
 const saveStatus = document.getElementById('save-status');
-const serverUrl = 'https://scholarspath.onrender.com'; // Use your Render URL
 
 // Class options mapping
 const classOptions = {
@@ -36,12 +35,7 @@ const subjectOptions = {
     // Junior High School (Basic 7-9)
     'basic-7-(jhs-1)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
     'basic-8-(jhs-2)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-
-    // Senior High School (Basic 10-12)
-    'basic-10-(shs-1)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
-    'basic-11-(shs-2)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
-    'basic-12-(shs-3)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"]
+    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"]
 };
 
 // Populate class dropdown based on level selection
@@ -52,16 +46,11 @@ levelInput.addEventListener('change', () => {
     classInput.disabled = true;
     subjectInput.disabled = true;
     generateBtn.disabled = true;
-    saveBtn.style.display = 'none';
-    questionsOutput.textContent = '';
-    statusMessage.textContent = '';
-    saveStatus.textContent = '';
 
     if (classOptions[selectedLevel]) {
         classOptions[selectedLevel].forEach(cls => {
             const option = document.createElement('option');
-            // Correctly format the value for the option
-            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/[\(\)]/g, '');
+            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/–/g, '-');
             option.textContent = cls;
             classInput.appendChild(option);
         });
@@ -75,15 +64,11 @@ classInput.addEventListener('change', () => {
     subjectInput.innerHTML = '<option value="">-- Select Subject --</option>';
     subjectInput.disabled = true;
     generateBtn.disabled = true;
-    saveBtn.style.display = 'none';
-    questionsOutput.textContent = '';
-    statusMessage.textContent = '';
-    saveStatus.textContent = '';
 
     if (subjectOptions[selectedClass]) {
         subjectOptions[selectedClass].forEach(subject => {
             const option = document.createElement('option');
-            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-');
             option.value = formattedValue;
             option.textContent = subject;
             subjectInput.appendChild(option);
@@ -92,106 +77,91 @@ classInput.addEventListener('change', () => {
     }
 });
 
-// Enable generate button if all selections are made
-subjectInput.addEventListener('change', () => {
-    if (levelInput.value && classInput.value && subjectInput.value && topicInput.value && countInput.value) {
-        generateBtn.disabled = false;
-    } else {
-        generateBtn.disabled = true;
-    }
-});
-
-topicInput.addEventListener('input', () => {
-    if (levelInput.value && classInput.value && subjectInput.value && topicInput.value && countInput.value) {
-        generateBtn.disabled = false;
-    } else {
-        generateBtn.disabled = true;
-    }
-});
-
-countInput.addEventListener('input', () => {
-    if (levelInput.value && classInput.value && subjectInput.value && topicInput.value && countInput.value) {
-        generateBtn.disabled = false;
-    } else {
-        generateBtn.disabled = true;
-    }
-});
-
-// Show/hide timer settings based on checkbox
+// Toggle visibility of timer settings
 timerToggleInput.addEventListener('change', () => {
-    if (timerToggleInput.checked) {
-        timerSettings.style.display = 'block';
-    } else {
-        timerSettings.style.display = 'none';
-    }
+    timerSettings.style.display = timerToggleInput.checked ? 'block' : 'none';
 });
 
-let generatedQuestions = [];
+// Enable generate button when all fields are selected
+form.addEventListener('change', () => {
+    generateBtn.disabled = !(levelInput.value && classInput.value && subjectInput.value && topicInput.value && countInput.value);
+});
 
-// Handle form submission for question generation
+// Handle question generation
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     generateBtn.disabled = true;
     generateBtn.textContent = 'Generating...';
-    statusMessage.textContent = 'Generating questions...';
-    questionsOutput.textContent = '';
+    statusMessage.textContent = 'Generating questions. This may take a moment...';
     saveBtn.style.display = 'none';
-
-    const level = levelInput.value;
-    const classLevel = classInput.value;
-    const subject = subjectInput.value;
-    const topic = topicInput.value;
-    const count = countInput.value;
+    questionsOutput.textContent = ''; // Clear previous output
 
     try {
-        const response = await fetch(`${serverUrl}/generate-questions`, {
+        const level = levelInput.value;
+        const classLevel = classInput.value;
+        const subject = subjectInput.value;
+        const topic = topicInput.value;
+        const count = countInput.value;
+
+        const response = await fetch('https://scholarspath.onrender.com/generate-questions', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ level, classLevel, subject, topic, count })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ level, class: classLevel, subject, topic, count })
         });
 
+        const text = await response.text();
+
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Server error');
+            try {
+                const errorData = JSON.parse(text);
+                throw new Error(errorData.error || 'Server error');
+            } catch (jsonError) {
+                throw new Error(text || 'Server error');
+            }
         }
 
-        const questions = await response.json();
-        generatedQuestions = questions;
-        questionsOutput.textContent = JSON.stringify(questions, null, 2);
-        statusMessage.textContent = 'Questions generated successfully!';
-        statusMessage.style.color = 'green';
-        saveBtn.style.display = 'block';
+        try {
+            const data = JSON.parse(text);
+            questionsOutput.textContent = JSON.stringify(data, null, 2);
+            statusMessage.textContent = 'Questions generated successfully!';
+            statusMessage.style.color = 'green';
+            saveBtn.style.display = 'block';
+
+        } catch (jsonError) {
+            questionsOutput.textContent = `Error: Failed to parse AI response as JSON.\n\nRaw AI Response:\n${text}`;
+            statusMessage.textContent = 'Error: Failed to generate questions. AI response was not a valid JSON array.';
+            statusMessage.style.color = 'red';
+            saveBtn.style.display = 'none';
+        }
 
     } catch (error) {
-        statusMessage.textContent = `Error: ${error.message}`;
+        statusMessage.textContent = `Error: ${error.message}. Please check the server status.`;
         statusMessage.style.color = 'red';
-        console.error("Generation error:", error);
+        console.error("Fetch error:", error);
     } finally {
         generateBtn.disabled = false;
         generateBtn.textContent = 'Generate Questions';
     }
 });
 
-// Handle saving questions to file
+// Handle saving questions
 saveBtn.addEventListener('click', async () => {
     saveBtn.disabled = true;
     saveBtn.textContent = 'Saving...';
     saveStatus.textContent = '';
 
-    const level = levelInput.value;
-    const classLevel = classInput.value;
-    const subject = subjectInput.value;
-    const enableTimer = timerToggleInput.checked;
-    const timePerQuestion = enableTimer ? parseInt(timePerQuestionInput.value) : 0;
-
     try {
-        const response = await fetch(`${serverUrl}/save-questions`, {
+        const generatedQuestions = JSON.parse(questionsOutput.textContent);
+        const level = levelInput.value;
+        const classLevel = classInput.value;
+        const subject = subjectInput.value;
+        const enableTimer = timerToggleInput.checked;
+        const timePerQuestionInMinutes = parseInt(timePerQuestionInput.value);
+        const timePerQuestion = enableTimer ? (timePerQuestionInMinutes * 60) : 0;
+
+        const response = await fetch('https://scholarspath.onrender.com/save-questions', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 level,
                 classLevel,
