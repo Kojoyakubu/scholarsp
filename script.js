@@ -36,34 +36,41 @@ const classOptions = {
 // Subject options mapping for different class levels
 const subjectOptions = {
     // Lower Primary (Basic 1-3)
-    'basic-1': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts"],
-    'basic-2': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts"],
-    'basic-3': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts"],
-
+    'basic-1': ["English Language", "Mathematics", "Science", "Our World Our People", "History"],
+    'basic-2': ["English Language", "Mathematics", "Science", "Our World Our People", "History"],
+    'basic-3': ["English Language", "Mathematics", "Science", "Our World Our People", "History"],
     // Upper Primary (Basic 4-6)
-    'basic-4': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts", "Computing", "French", "Ghanaian Language"],
-    'basic-5': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts", "Computing", "French", "Ghanaian Language"],
-    'basic-6': ["English Language", "Mathematics", "Science", "History", "Our World Our People", "Religious and Moral Education", "Physical Education", "Creative Arts", "Computing", "French", "Ghanaian Language"],
-
+    'basic-4': ["English Language", "Mathematics", "Science", "Our World Our People", "History", "Religious and Moral Education"],
+    'basic-5': ["English Language", "Mathematics", "Science", "Our World Our People", "History", "Religious and Moral Education"],
+    'basic-6': ["English Language", "Mathematics", "Science", "Our World Our People", "History", "Religious and Moral Education"],
     // Junior High School (Basic 7-9)
-    'basic-7-(jhs-1)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-    'basic-8-(jhs-2)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"],
-    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education", "Physical & Health Education", "Career Technology", "Computing", "Creative Arts & Design", "French", "Ghanaian Language"]
+    'basic-7-(jhs-1)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education"],
+    'basic-8-(jhs-2)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education"],
+    'basic-9-(jhs-3)': ["English Language", "Mathematics", "Science", "Social Studies", "Religious and Moral Education"],
+    // Senior High School (Basic 10-12)
+    'basic-10-(shs-1)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
+    'basic-11-(shs-2)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"],
+    'basic-12-(shs-3)': ["Core Mathematics", "Integrated Science", "Social Studies", "English Language", "Religious and Moral Education"]
 };
 
-// Populate class dropdown based on level selection
+// Helper function to format the class level string
+const formatClassLevel = (str) => {
+    return str.toLowerCase().replace(/\s/g, '-').replace(/[\(\)]/g, '');
+};
+
+// Populate class options based on level selection
 levelSelect.addEventListener('change', () => {
-    const selectedLevel = levelSelect.value;
+    const level = levelSelect.value;
     classSelect.innerHTML = '<option value="">-- Select Class --</option>';
-    subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
     classSelect.disabled = true;
+    subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
     subjectSelect.disabled = true;
     startBtn.disabled = true;
 
-    if (classOptions[selectedLevel]) {
-        classOptions[selectedLevel].forEach(cls => {
+    if (level) {
+        classOptions[level].forEach(cls => {
             const option = document.createElement('option');
-            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/–/g, '-');
+            option.value = formatClassLevel(cls);
             option.textContent = cls;
             classSelect.appendChild(option);
         });
@@ -71,97 +78,63 @@ levelSelect.addEventListener('change', () => {
     }
 });
 
-// Populate subject dropdown based on class selection
-classSelect.addEventListener('change', async () => {
-    const selectedClass = classSelect.value;
+// Populate subject options based on class selection
+classSelect.addEventListener('change', () => {
+    const classLevel = classSelect.value;
     subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
     subjectSelect.disabled = true;
     startBtn.disabled = true;
 
-    if (subjectOptions[selectedClass]) {
-        subjectOptions[selectedClass].forEach(subject => {
-            const option = document.createElement('option');
-            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-');
-            option.value = formattedValue;
-            option.textContent = subject;
-            subjectSelect.appendChild(option);
-        });
-        subjectSelect.disabled = false;
+    if (classLevel) {
+        const subjects = subjectOptions[classLevel];
+        if (subjects) {
+            subjects.forEach(sub => {
+                const option = document.createElement('option');
+                option.value = sub.toLowerCase().replace(/\s/g, '-');
+                option.textContent = sub;
+                subjectSelect.appendChild(option);
+            });
+            subjectSelect.disabled = false;
+        }
     }
 });
 
-// Check if all fields are selected to enable start button
-function checkSelections() {
-    startBtn.disabled = !(levelSelect.value && classSelect.value && subjectSelect.value);
-}
-levelSelect.addEventListener('change', checkSelections);
-classSelect.addEventListener('change', checkSelections);
-subjectSelect.addEventListener('change', checkSelections);
-
-// Function to fetch timer configuration from the server
-async function fetchConfig() {
-    try {
-        const response = await fetch('https://scholarspath.onrender.com');
-        if (response.ok) {
-            const config = await response.json();
-            enableTimer = config.enableTimer;
-            timePerQuestion = config.timePerQuestion || 60; // Use a default if not set
-            console.log(`Timer is ${enableTimer ? 'enabled' : 'disabled'} with a time of ${timePerQuestion} seconds.`);
-        }
-    } catch (error) {
-        console.error('Failed to fetch timer configuration:', error);
-        enableTimer = true; // Fallback to a default of true
-        timePerQuestion = 60; // Fallback to a default time
+// Enable start button if all selections are made
+subjectSelect.addEventListener('change', () => {
+    if (levelSelect.value && classSelect.value && subjectSelect.value) {
+        startBtn.disabled = false;
+    } else {
+        startBtn.disabled = true;
     }
-}
+});
 
-// Function to format time in MM:SS
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-    return `${formattedMinutes}:${formattedSeconds}`;
-}
-
-// Function to shuffle an array (Fisher-Yates algorithm)
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-// Quiz functionality
+// Start Quiz button functionality
 startBtn.addEventListener('click', async () => {
     const level = levelSelect.value;
     const classLevel = classSelect.value;
     const subject = subjectSelect.value;
 
-    // Check if a subject is selected
-    if (!subject) {
-        alert("Please select a subject to start the quiz.");
-        return;
-    }
-    
-    // Fetch the latest config before starting the quiz
-    await fetchConfig();
-
     try {
-        const response = await fetch(`https://scholarspath.onrender.com/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
-        if (!response.ok) {
-            throw new Error('Failed to load quiz questions.');
-        }
-        questions = await response.json();
+        // Fetch questions from the server
+        const questionsResponse = await fetch(`http://localhost:3000/quiz-questions?level=${level}&class=${classLevel}&subject=${subject}`);
+        const configResponse = await fetch(`http://localhost:3000/config`);
 
-        if (questions.length === 0) {
-            alert("No questions found for the selected subject. Please select a different one.");
-            return;
+        if (!questionsResponse.ok) {
+            throw new Error('Failed to fetch questions. No questions found.');
         }
 
-        // Shuffle the questions array
-        shuffleArray(questions);
+        if (!configResponse.ok) {
+            // Handle cases where the config file might not exist, using default values
+            console.warn('Failed to fetch config. Using default timer values.');
+            enableTimer = true;
+            timePerQuestion = 60;
+        } else {
+            const configData = await configResponse.json();
+            enableTimer = configData.enableTimer;
+            timePerQuestion = configData.timePerQuestion;
+        }
 
+        questions = await questionsResponse.json();
         userAnswers = Array(questions.length).fill(null);
         currentQuestionIndex = 0;
         score = 0;
@@ -169,7 +142,9 @@ startBtn.addEventListener('click', async () => {
         welcomeContainer.classList.add('hidden');
         quizContainer.classList.remove('hidden');
 
-        // Check the timer setting and show/hide the timer container
+        updateQuizDisplay();
+
+        // Start or hide the timer based on the fetched config
         if (enableTimer) {
             timerContainer.style.display = 'block';
             startTimer();
@@ -177,174 +152,144 @@ startBtn.addEventListener('click', async () => {
             timerContainer.style.display = 'none';
         }
 
-        displayQuestion();
-        updateNavigationButtons();
-        updateScoreDisplay();
-
     } catch (error) {
         alert(error.message);
-        console.error("Error starting quiz:", error);
+        console.error("Error:", error);
     }
 });
 
-function displayQuestion() {
-    // Clear previous options
-    optionsList.innerHTML = '';
+// Function to update the quiz display
+const updateQuizDisplay = () => {
+    if (questions.length === 0) {
+        questionText.textContent = "No questions loaded.";
+        optionsList.innerHTML = "";
+        nextBtn.style.display = 'none';
+        prevBtn.style.display = 'none';
+        submitBtn.style.display = 'none';
+        return;
+    }
 
     const currentQuestion = questions[currentQuestionIndex];
-    quizTitle.textContent = `${subjectSelect.options[subjectSelect.selectedIndex].text} Quiz`;
+    quizTitle.textContent = `${subjectSelect.options[subjectSelect.selectedIndex].textContent} Quiz`;
     questionText.textContent = `Question ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+    optionsList.innerHTML = "";
 
-    currentQuestion.options.forEach(optionObj => {
-        // Extract the key (A, B, C, D) and value from the options object
-        const optionKey = Object.keys(optionObj)[0];
-        const optionValue = Object.values(optionObj)[0];
+    // Clear previous selection
+    const selectedOption = userAnswers[currentQuestionIndex];
+
+    currentQuestion.options.forEach(option => {
+        const key = Object.keys(option)[0];
+        const value = option[key];
 
         const li = document.createElement('li');
-        li.textContent = `${optionKey}. ${optionValue}`;
-        
-        li.addEventListener('click', () => {
-            // Remove 'selected' class from all options
-            optionsList.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
-            // Add 'selected' class to the clicked option
-            li.classList.add('selected');
-            // Store the option key (A, B, C, or D) instead of the full object
-            userAnswers[currentQuestionIndex] = optionKey;
-        });
+        li.textContent = `${key}. ${value}`;
+        li.dataset.option = key;
 
-        // Set 'selected' class if this option was previously chosen
-        if (userAnswers[currentQuestionIndex] === optionKey) {
+        // Apply a "selected" class if this option was previously chosen
+        if (selectedOption && selectedOption === key) {
             li.classList.add('selected');
         }
 
+        li.addEventListener('click', () => {
+            // Remove 'selected' class from all other options
+            optionsList.querySelectorAll('li').forEach(item => {
+                item.classList.remove('selected');
+            });
+            // Add 'selected' class to the clicked option
+            li.classList.add('selected');
+
+            // Save the user's answer
+            userAnswers[currentQuestionIndex] = key;
+        });
+
         optionsList.appendChild(li);
     });
-    updateNavigationButtons();
-}
 
-function updateNavigationButtons() {
-    prevBtn.classList.toggle('hidden', currentQuestionIndex === 0);
-    nextBtn.classList.toggle('hidden', currentQuestionIndex < questions.length - 1 ? false : true);
-    submitBtn.classList.toggle('hidden', currentQuestionIndex < questions.length - 1 ? true : false);
-}
+    // Handle button visibility
+    prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+    nextBtn.style.display = currentQuestionIndex < questions.length - 1 ? 'inline-block' : 'none';
+    submitBtn.style.display = currentQuestionIndex === questions.length - 1 ? 'inline-block' : 'none';
+};
+
+// Navigation buttons
+nextBtn.addEventListener('click', () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        updateQuizDisplay();
+    }
+});
 
 prevBtn.addEventListener('click', () => {
     if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
-        displayQuestion();
-        updateNavigationButtons();
+        updateQuizDisplay();
     }
 });
 
-nextBtn.addEventListener('click', () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        displayQuestion();
-        updateNavigationButtons();
-    }
-});
-
+// Submit Quiz
 submitBtn.addEventListener('click', () => {
-    calculateScore();
-    displayResults();
     clearInterval(timerInterval);
+    checkAnswers();
+    showResults();
 });
 
+// Timer functionality
 function startTimer() {
-    let timeRemaining = timePerQuestion; // Use the value from the config file
-    timerDisplay.textContent = formatTime(timeRemaining);
-
-    clearInterval(timerInterval); // Clear any existing timer
+    clearInterval(timerInterval);
+    let timeLeft = timePerQuestion * 60; // Convert minutes to seconds
+    timerDisplay.textContent = `${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`;
 
     timerInterval = setInterval(() => {
-        timeRemaining--;
-        timerDisplay.textContent = formatTime(timeRemaining);
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-        if (timeRemaining <= 0) {
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            alert("Time's up! Submitting your quiz now.");
-            submitQuizOnTimeout();
+            alert("Time's up! Submitting quiz.");
+            checkAnswers();
+            showResults();
         }
     }, 1000);
 }
 
-function submitQuizOnTimeout() {
-    calculateScore();
-    displayResults();
-}
-
-function calculateScore() {
+// Check answers and calculate score
+const checkAnswers = () => {
     score = 0;
-    questions.forEach((q, index) => {
-        if (userAnswers[index] === q.correct_answer) {
+    questions.forEach((question, index) => {
+        if (userAnswers[index] === question.correct_answer) {
             score++;
         }
     });
-}
+};
 
-function updateScoreDisplay() {
-    scoreValue.textContent = `${score}/${questions.length}`;
-}
-
-function displayResults() {
+// Show results
+const showResults = () => {
     quizContainer.classList.add('hidden');
     resultsContainer.classList.remove('hidden');
+    answersReview.innerHTML = "";
 
-    scoreOutput.textContent = `You scored ${score} out of ${questions.length}.`;
-    answersReview.innerHTML = '';
-
-    const scorePercentage = (score / questions.length) * 100;
-    let feedbackComment = '';
-    
-    if (scorePercentage === 100) {
-        feedbackComment = 'Flawless victory! You are a true master of this subject!';
-    } else if (scorePercentage >= 80) {
-        feedbackComment = 'Excellent job! You did a fantastic job and clearly know the material!';
-    } else if (scorePercentage >= 60) {
-        feedbackComment = 'Good effort! You are well on your way to mastery. Keep practicing!';
-    } else {
-        feedbackComment = 'Keep going! Every attempt is a step forward. Review your answers and try again!';
-    }
-    
-    const commentElement = document.createElement('p');
-    commentElement.textContent = feedbackComment;
-    commentElement.classList.add('feedback-comment');
-    resultsContainer.insertBefore(commentElement, scoreOutput.nextSibling);
-
-    questions.forEach((q, index) => {
+    questions.forEach((question, index) => {
         const resultDiv = document.createElement('div');
+        resultDiv.classList.add('answer-review-item');
+
         const userAnswer = userAnswers[index];
-        const isCorrect = userAnswer === q.correct_answer;
+        const isCorrect = userAnswer === question.correct_answer;
 
-        resultDiv.classList.add('answer-review-item', isCorrect ? 'correct' : 'incorrect');
-
-        const questionText = document.createElement('p');
-        questionText.innerHTML = `<strong>${index + 1}. ${q.question}</strong>`;
-
-        const answerText = document.createElement('p');
-        answerText.innerHTML = `<strong>Your Answer:</strong> ${userAnswer || 'No answer selected'}`;
-
-        const explanationText = document.createElement('p');
-        explanationText.innerHTML = `<strong>Explanation:</strong> ${q.correct_answer_explanation}`;
-
-        // Append elements in the correct order
-        resultDiv.appendChild(questionText);
-        resultDiv.appendChild(answerText);
-
-        if (!isCorrect) {
-            const correctAnswerText = document.createElement('p');
-            correctAnswerText.innerHTML = `<strong>Correct Answer:</strong> ${q.correct_answer}`;
-            resultDiv.appendChild(correctAnswerText);
-        }
-
-        resultDiv.appendChild(explanationText);
+        const icon = isCorrect ? '✅' : '❌';
+        resultDiv.innerHTML = `
+            <p><strong>${icon} Question ${index + 1}:</strong> ${question.question}</p>
+            <p>Your Answer: ${userAnswer ? userAnswer : 'No Answer'}</p>
+            <p>Correct Answer: ${question.correct_answer}. ${question.correct_answer_explanation}</p>
+        `;
         answersReview.appendChild(resultDiv);
     });
 
     // Update both score displays
     scoreValue.textContent = `${score}/${questions.length}`;
     scoreOutput.textContent = `You scored ${score} out of ${questions.length}.`;
-}
+};
 
 restartBtn.addEventListener('click', () => {
     resultsContainer.classList.add('hidden');
