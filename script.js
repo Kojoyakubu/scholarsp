@@ -101,7 +101,8 @@ subjectSelect.addEventListener('change', checkSelections);
 // Function to fetch timer configuration from the server
 async function fetchConfig() {
     try {
-        const response = await fetch('https://scholarspath.onrender.com');
+        // ✅ FIX: Changed the URL to the correct /config endpoint
+        const response = await fetch('https://scholarspath.onrender.com/config');
         if (response.ok) {
             const config = await response.json();
             enableTimer = config.enableTimer;
