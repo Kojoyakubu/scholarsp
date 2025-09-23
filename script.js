@@ -25,6 +25,7 @@ let score = 0;
 let timerInterval;
 let timePerQuestion = 60;
 let enableTimer = true;
+let shuffleQuestions = true;
 
 // Class options mapping
 const classOptions = {
@@ -101,18 +102,19 @@ subjectSelect.addEventListener('change', checkSelections);
 // Function to fetch timer configuration from the server
 async function fetchConfig() {
     try {
-        // ✅ FIX: Changed the URL to the correct /config endpoint
         const response = await fetch('https://scholarspath.onrender.com/config');
         if (response.ok) {
             const config = await response.json();
             enableTimer = config.enableTimer;
-            timePerQuestion = config.timePerQuestion || 60; // Use a default if not set
-            console.log(`Timer is ${enableTimer ? 'enabled' : 'disabled'} with a time of ${timePerQuestion} seconds.`);
+            timePerQuestion = config.timePerQuestion || 60;
+            shuffleQuestions = config.shuffleQuestions !== undefined ? config.shuffleQuestions : true;
+            console.log(`Timer is ${enableTimer ? 'enabled' : 'disabled'}. Shuffle is ${shuffleQuestions ? 'enabled' : 'disabled'}.`);
         }
     } catch (error) {
         console.error('Failed to fetch timer configuration:', error);
-        enableTimer = true; // Fallback to a default of true
-        timePerQuestion = 60; // Fallback to a default time
+        enableTimer = true;
+        timePerQuestion = 60;
+        shuffleQuestions = true;
     }
 }
 
@@ -139,13 +141,11 @@ startBtn.addEventListener('click', async () => {
     const classLevel = classSelect.value;
     const subject = subjectSelect.value;
 
-    // Check if a subject is selected
     if (!subject) {
         alert("Please select a subject to start the quiz.");
         return;
     }
     
-    // Fetch the latest config before starting the quiz
     await fetchConfig();
 
     try {
@@ -160,8 +160,9 @@ startBtn.addEventListener('click', async () => {
             return;
         }
 
-        // Shuffle the questions array
-        shuffleArray(questions);
+        if (shuffleQuestions) {
+            shuffleArray(questions);
+        }
 
         userAnswers = Array(questions.length).fill(null);
         currentQuestionIndex = 0;
@@ -170,7 +171,6 @@ startBtn.addEventListener('click', async () => {
         welcomeContainer.classList.add('hidden');
         quizContainer.classList.remove('hidden');
 
-        // Check the timer setting and show/hide the timer container
         if (enableTimer) {
             timerContainer.style.display = 'block';
             startTimer();
@@ -189,7 +189,6 @@ startBtn.addEventListener('click', async () => {
 });
 
 function displayQuestion() {
-    // Clear previous options
     optionsList.innerHTML = '';
 
     const currentQuestion = questions[currentQuestionIndex];
@@ -197,27 +196,20 @@ function displayQuestion() {
     questionText.textContent = `Question ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
 
     currentQuestion.options.forEach(optionObj => {
-        // Extract the key (A, B, C, D) and value from the options object
         const optionKey = Object.keys(optionObj)[0];
         const optionValue = Object.values(optionObj)[0];
-
         const li = document.createElement('li');
         li.textContent = `${optionKey}. ${optionValue}`;
         
         li.addEventListener('click', () => {
-            // Remove 'selected' class from all options
             optionsList.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
-            // Add 'selected' class to the clicked option
             li.classList.add('selected');
-            // Store the option key (A, B, C, or D) instead of the full object
             userAnswers[currentQuestionIndex] = optionKey;
         });
 
-        // Set 'selected' class if this option was previously chosen
         if (userAnswers[currentQuestionIndex] === optionKey) {
             li.classList.add('selected');
         }
-
         optionsList.appendChild(li);
     });
     updateNavigationButtons();
@@ -252,10 +244,9 @@ submitBtn.addEventListener('click', () => {
 });
 
 function startTimer() {
-    let timeRemaining = timePerQuestion; // Use the value from the config file
+    let timeRemaining = timePerQuestion;
     timerDisplay.textContent = formatTime(timeRemaining);
-
-    clearInterval(timerInterval); // Clear any existing timer
+    clearInterval(timerInterval);
 
     timerInterval = setInterval(() => {
         timeRemaining--;
@@ -328,7 +319,6 @@ function displayResults() {
         const explanationText = document.createElement('p');
         explanationText.innerHTML = `<strong>Explanation:</strong> ${q.correct_answer_explanation}`;
 
-        // Append elements in the correct order
         resultDiv.appendChild(questionText);
         resultDiv.appendChild(answerText);
 
@@ -342,7 +332,6 @@ function displayResults() {
         answersReview.appendChild(resultDiv);
     });
 
-    // Update both score displays
     scoreValue.textContent = `${score}/${questions.length}`;
     scoreOutput.textContent = `You scored ${score} out of ${questions.length}.`;
 }
@@ -357,16 +346,12 @@ restartBtn.addEventListener('click', () => {
     subjectSelect.disabled = true;
     startBtn.disabled = true;
     timerDisplay.textContent = "";
-
-    // Clear the timer display when returning to welcome page
     timerContainer.style.display = 'block';
-
 });
 
 // Dark Mode Toggle Functionality
 const modeToggleBtn = document.getElementById('mode-toggle');
 
-// On page load, check for a saved theme preference in localStorage
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -374,12 +359,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Add event listener for the toggle button
 modeToggleBtn.addEventListener('click', () => {
-    // Toggle the .dark-mode class on the body
     document.body.classList.toggle('dark-mode');
 
-    // Save the user's preference to localStorage
     if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark');
     } else {

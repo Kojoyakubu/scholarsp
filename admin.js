@@ -7,6 +7,7 @@ const countInput = document.getElementById('count-input');
 const timerToggleInput = document.getElementById('timer-toggle-input');
 const timePerQuestionInput = document.getElementById('time-per-question-input');
 const timerSettings = document.getElementById('timer-settings');
+const shuffleToggleInput = document.getElementById('shuffle-toggle-input');
 const generateBtn = document.getElementById('generate-btn');
 const statusMessage = document.getElementById('status-message');
 const questionsOutput = document.getElementById('questions-output');
@@ -158,6 +159,7 @@ saveBtn.addEventListener('click', async () => {
         const enableTimer = timerToggleInput.checked;
         const timePerQuestionInMinutes = parseInt(timePerQuestionInput.value);
         const timePerQuestion = enableTimer ? (timePerQuestionInMinutes * 60) : 0;
+        const shuffleQuestions = shuffleToggleInput.checked;
 
         const response = await fetch('https://scholarspath.onrender.com/save-questions', {
             method: 'POST',
@@ -168,7 +170,8 @@ saveBtn.addEventListener('click', async () => {
                 subject,
                 questions: generatedQuestions,
                 enableTimer,
-                timePerQuestion
+                timePerQuestion,
+                shuffleQuestions
             })
         });
 
