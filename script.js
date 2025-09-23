@@ -70,7 +70,8 @@ levelSelect.addEventListener('change', () => {
     if (classOptions[selectedLevel]) {
         classOptions[selectedLevel].forEach(cls => {
             const option = document.createElement('option');
-            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/[\(\)]/g, '');
+            // Correctly format the value for the option, removing parentheses
+            option.value = cls.toLowerCase().replace(/\s+/g, '-').replace(/[\(\)]/g, '').replace(/–/g, '-').trim();
             option.textContent = cls;
             classSelect.appendChild(option);
         });
@@ -88,7 +89,7 @@ classSelect.addEventListener('change', async () => {
     if (subjectOptions[selectedClass]) {
         subjectOptions[selectedClass].forEach(subject => {
             const option = document.createElement('option');
-            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+            const formattedValue = subject.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and').replace(/–/g, '-').trim();
             option.value = formattedValue;
             option.textContent = subject;
             subjectSelect.appendChild(option);
@@ -150,7 +151,7 @@ startBtn.addEventListener('click', async () => {
         alert("Please select a subject to start the quiz.");
         return;
     }
-
+    
     // Fetch the latest config before starting the quiz
     await fetchConfig();
 
@@ -258,7 +259,7 @@ submitBtn.addEventListener('click', () => {
 });
 
 function startTimer() {
-    let timeRemaining = timePerQuestion * 60; // Convert to seconds
+    let timeRemaining = timePerQuestion; // Use the value from the config file
     timerDisplay.textContent = formatTime(timeRemaining);
 
     clearInterval(timerInterval); // Clear any existing timer
@@ -302,7 +303,7 @@ function displayResults() {
 
     const scorePercentage = (score / questions.length) * 100;
     let feedbackComment = '';
-
+    
     if (scorePercentage === 100) {
         feedbackComment = 'Flawless victory! You are a true master of this subject!';
     } else if (scorePercentage >= 80) {
@@ -312,7 +313,7 @@ function displayResults() {
     } else {
         feedbackComment = 'Keep going! Every attempt is a step forward. Review your answers and try again!';
     }
-
+    
     const commentElement = document.createElement('p');
     commentElement.textContent = feedbackComment;
     commentElement.classList.add('feedback-comment');
