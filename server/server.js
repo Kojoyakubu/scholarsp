@@ -12,14 +12,28 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// THIS IS THE CORRECTED LINE
+// Set up the __dirname and serve static files from the root directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '..')));
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+// Define paths
 const questionsDir = path.join(__dirname, 'questions');
-const configPath = path.join(__dirname, 'config.json');
+const configPath = path.join(__dirname, '..', 'config.json');
+
+// Ensure the questions directory exists before starting the server
+// THIS IS THE NEW CODE
+async function ensureDirsExist() {
+    try {
+        await fs.mkdir(questionsDir, { recursive: true });
+        console.log('Questions directory is ready.');
+    } catch (error) {
+        console.error('Failed to create directories:', error);
+    }
+}
+ensureDirsExist();
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 const generateContentPrompt = (level, classLevel, count, topic, subject) => `
 You are a Ghanaian teacher for a ${level} student in ${classLevel}.
